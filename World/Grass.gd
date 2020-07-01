@@ -7,6 +7,6 @@ func create_grass_effect():
 	add_child(grassEffect)
 	yield(grassEffect, "finished")
 		
-func _on_HurtBox_area_entered(area):
+func _on_HurtBox_area_entered(_area):
 	yield(create_grass_effect(), "completed")
 	queue_free()

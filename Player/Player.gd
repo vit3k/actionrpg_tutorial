@@ -16,6 +16,7 @@ var roll_vector = Vector2.RIGHT
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
+onready var swordHitbox = $HitboxPivot/SwordHitbox
 
 func _ready():
 	animationTree.active = true
@@ -25,13 +26,13 @@ func _physics_process(delta):
 		MOVE: 
 			move(delta)
 		ROLL:
-			roll(delta)
+			roll()
 		ATTACK:
-			attack(delta)
+			attack()
 			
 func move(delta):
 	var input_vector = Vector2.ZERO
-	
+	swordHitbox.knockback = input_vector
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	
@@ -56,12 +57,12 @@ func move(delta):
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
 
-func roll(delta):
+func roll():
 	velocity = roll_vector * ROLL_SPEED
 	animationState.travel("Roll")
 	velocity = move_and_slide(velocity)
 		
-func attack(_delta):
+func attack():
 	velocity = Vector2.ZERO
 	animationState.travel("Attack")
 	

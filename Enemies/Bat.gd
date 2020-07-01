@@ -9,4 +9,5 @@ func _physics_process(delta):
 	knockback = move_and_collide(knockback)
 	
 func _on_HurtBox_area_entered(area):
+	knockback = area.knockback
 	queue_free()
